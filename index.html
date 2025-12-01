@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Banco Conecta</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- PANTALLA DE LOGIN / REGISTRO -->
+  <div id="authScreen" class="auth-screen">
+    <div class="auth-box">
+      <img src="logo.png" class="auth-logo" alt="Banco Conecta" />
+      <h2>Bienvenido a Banco Conecta</h2>
+      <p class="auth-subtitle">Tu banca online rápida y segura.</p>
+
+      <div class="auth-tabs">
+        <button id="btnLoginTab" class="tab active" onclick="setAuthMode('login')">
+          Acceder
+        </button>
+        <button id="btnRegisterTab" class="tab" onclick="setAuthMode('register')">
+          Registrarme
+        </button>
+      </div>
+
+      <!-- Login -->
+      <form id="loginForm" class="auth-form">
+        <input type="email" id="loginEmail" placeholder="Correo electrónico" required />
+        <input type="password" id="loginPassword" placeholder="Contraseña" required />
+        <p id="loginMessage" class="auth-message"></p>
+        <button type="submit" class="btn-primary auth-btn">Acceder</button>
+      </form>
+
+      <!-- Registro -->
+      <form id="registerForm" class="auth-form hidden">
+        <input type="text" id="registerName" placeholder="Nombre completo" required />
+        <input type="email" id="registerEmail" placeholder="Correo electrónico" required />
+        <input type="password" id="registerPassword" placeholder="Contraseña (mínimo 8 caracteres)" required />
+        <input type="password" id="registerPassword2" placeholder="Confirmar contraseña" required />
+
+        <label class="terms">
+          <input type="checkbox" id="terms" />
+          <span>Acepto los términos y condiciones</span>
+        </label>
+
+        <p id="registerMessage" class="auth-message"></p>
+
+        <button type="submit" class="btn-primary auth-btn">Crear cuenta</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- APP DEL BANCO (se muestra luego de iniciar sesión) -->
+  <div id="bankApp" class="hidden">
+    <!-- NAVBAR -->
+    <header>
+      <div class="navbar">
+        <div class="logo">
+          <img src="logo.png" class="logo-img" alt="Banco Conecta" />
+          <span>Banco Conecta</span>
+        </div>
+
+        <nav>
+          <ul>
+            <li><a href="#" onclick="scrollToSection('inicio'); return false;">Inicio</a></li>
+            <li><a href="#" onclick="scrollToSection('cuentas'); return false;">Cuentas</a></li>
+            <li><a href="#" onclick="scrollToSection('pagos'); return false;">Pagos</a></li>
+            <li><a href="#" onclick="scrollToSection('tarjetas'); return false;">Tarjetas</a></li>
+            <li><a href="#" onclick="scrollToSection('ayuda'); return false;">Ayuda</a></li>
+          </ul>
+        </nav>
+
+        <!-- Botones de auth (se ocultan al estar logueado) -->
+        <div class="nav-actions">
+          <button class="btn-outline" onclick="showAuth('register')">Registrarme</button>
+          <button class="btn-primary" onclick="showAuth('login')">Acceder</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section id="inicio" class="hero">
+      <div>
+        <div class="hero-badge">Sesiones seguras 24/7</div>
+        <h1 class="hero-title">
+          Tu <span class="hero-highlight">banco online</span>, rápido y sin complicaciones.
+        </h1>
+        <p class="hero-text">
+          Consulta saldos, transfiere dinero, paga servicios y administra tus tarjetas desde cualquier lugar.
+        </p>
+
+        <div class="hero-actions">
+          <button class="btn-primary" onclick="scrollToSection('transferencias')">
+            Iniciar transferencia →
+          </button>
+          <button class="btn-outline" onclick="scrollToSection('pagos')">
+            Pagar servicios
+          </button>
+        </div>
+
+        <div class="hero-note">
+          <span>✔ Sin letras pequeñas</span> •
+          <span>🔒 Cifrado de extremo a extremo</span>
+        </div>
+      </div>
+
+      <div class="hero-img-card">
+        <div class="hero-card-header">
+          <span class="hero-small-card-title">Cuenta principal</span>
+          <span class="hero-chip">En línea</span>
+        </div>
+
+        <div class="hero-balance">RD$ 45,230.50</div>
+        <div class="hero-balance-label">Saldo disponible hoy</div>
+
+        <div class="hero-card-grid">
+          <div class="hero-small-card">
+            <span class="hero-small-card-title">Ahorros</span>
+            <div class="hero-small-card-value">RD$ 120,000.00</div>
+          </div>
+          <div class="hero-small-card">
+            <span class="hero-small-card-title">Crédito</span>
+            <div class="hero-small-card-value">RD$ 15,800.00</div>
+          </div>
+          <div class="hero-small-card">
+            <span class="hero-small-card-title">Gastos hoy</span>
+            <div class="hero-small-card-value">RD$ 1,560.00</div>
+          </div>
+          <div class="hero-small-card">
+            <span class="hero-small-card-title">Próximo pago</span>
+            <div class="hero-small-card-value">RD$ 3,400.00</div>
+          </div>
+        </div>
+
+        <div class="hero-card-footer">
+          <span>Último acceso: hoy 10:25 a.m.</span>
+          <a href="#" class="hero-link">Ver movimientos →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="bank-main">
+      <!-- Columna izquierda -->
+      <section class="column-left">
+        <!-- Acciones rápidas / CUENTAS -->
+        <div class="card" id="cuentas">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title">Acciones rápidas</h3>
+              <p class="card-subtitle">Todo lo que usas a diario, a un clic.</p>
+            </div>
+            <span class="tag">Recomendado para ti</span>
+          </div>
+          <div class="quick-actions">
+            <div class="quick-action" onclick="scrollToSection('inicio')">
+              <div class="quick-action-icon">💰</div>
+              <div class="quick-action-label">Ver saldo</div>
+              <div class="quick-action-desc">Consulta tus cuentas al instante.</div>
+            </div>
+            <div class="quick-action" onclick="scrollToSection('transferencias')">
+              <div class="quick-action-icon">🔁</div>
+              <div class="quick-action-label">Transferir</div>
+              <div class="quick-action-desc">Entre tus cuentas o a otros bancos.</div>
+            </div>
+            <div class="quick-action" onclick="scrollToSection('pagos')">
+              <div class="quick-action-icon">🧾</div>
+              <div class="quick-action-label">Pagar servicios</div>
+              <div class="quick-action-desc">Luz, internet, recargas y más.</div>
+            </div>
+            <div class="quick-action" onclick="scrollToSection('tarjetas')">
+              <div class="quick-action-icon">💳</div>
+              <div class="quick-action-label">Tarjetas</div>
+              <div class="quick-action-desc">Ver límites y movimientos.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Resumen de productos -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title">Resumen de tus productos</h3>
+              <p class="card-subtitle">Una vista clara de tus finanzas.</p>
+            </div>
+            <span class="tag">RD$ 181,030.50 total</span>
+          </div>
+          <div class="accounts-list">
+            <div class="account">
+              <div class="account-top">
+                <div>
+                  <div class="account-name">Cuenta corriente</div>
+                  <div class="account-type">***-1234 • Pesos</div>
+                </div>
+                <div class="account-balance">RD$ 45,230.50</div>
+              </div>
+              <div class="account-extra">
+                <span>Disponible hoy</span>
+                <span>Ver detalles →</span>
+              </div>
+            </div>
+            <div class="account">
+              <div class="account-top">
+                <div>
+                  <div class="account-name">Cuenta de ahorros</div>
+                  <div class="account-type">***-5678 • Pesos</div>
+                </div>
+                <div class="account-balance">RD$ 120,000.00</div>
+              </div>
+              <div class="account-extra">
+                <span>Tasa 3.5% anual</span>
+                <span>Meta “Viaje”</span>
+              </div>
+            </div>
+            <div class="account">
+              <div class="account-top">
+                <div>
+                  <div class="account-name">Tarjeta de crédito</div>
+                  <div class="account-type">Visa • ***-9001</div>
+                </div>
+                <div class="account-balance">RD$ 15,800.00</div>
+              </div>
+              <div class="account-extra">
+                <span>Disponible</span>
+                <span>Corte: 18 de cada mes</span>
+              </div>
+            </div>
+            <div class="account">
+              <div class="account-top">
+                <div>
+                  <div class="account-name">Préstamo personal</div>
+                  <div class="account-type">Ref. 4450</div>
+                </div>
+                <div class="account-balance">RD$ 210,000.00</div>
+              </div>
+              <div class="account-extra">
+                <span>Cuota: RD$ 6,500</span>
+                <span>Vence: 10 / mes</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Transferencia -->
+        <div class="card" id="transferencias">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title">Transferencia rápida</h3>
+              <p class="card-subtitle">Envía dinero en segundos.</p>
+            </div>
+            <span class="tag">Sin costo entre tus cuentas</span>
+          </div>
+          <form id="transferForm">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="fromAccount">Desde</label>
+                <select id="fromAccount" required>
+                  <option value="">Selecciona una cuenta</option>
+                  <option>Cuenta corriente ***-1234</option>
+                  <option>Cuenta de ahorros ***-5678</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="toAccount">Hacia</label>
+                <select id="toAccount" required>
+                  <option value="">Selecciona destino</option>
+                  <option>Mi propia cuenta</option>
+                  <option>Otro banco nacional</option>
+                  <option>Cuenta favorita</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="amount">Monto (RD$)</label>
+                <input type="number" id="amount" min="1" step="0.01" required />
+              </div>
+              <div class="form-group">
+                <label for="ref">Referencia</label>
+                <input type="text" id="ref" placeholder="Ej: Renta, servicios, pago a Juan..." />
+              </div>
+              <div class="form-group form-full">
+                <label for="note">Nota opcional</label>
+                <textarea id="note" placeholder="Mensaje para ti o el destinatario (opcional)"></textarea>
+              </div>
+            </div>
+            <div class="form-footer">
+              <span>⏱ Se acreditará en menos de 1 minuto (simulado).</span>
+              <button class="btn-primary" type="submit">Confirmar transferencia</button>
+            </div>
+            <div id="transferSuccess" class="success-message">
+              ✅ Transferencia simulada con éxito. En un sistema real aquí verías el comprobante.
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- Columna derecha -->
+      <section class="column-right">
+        <!-- TARJETAS -->
+        <div class="card" id="tarjetas">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title">Tus tarjetas</h3>
+              <p class="card-subtitle">Control total en un solo lugar.</p>
+            </div>
+          </div>
+          <div class="card-list">
+            <div class="bank-card">
+              <div class="bank-card-header">
+                <div>
+                  <div class="bank-card-mini">Tarjeta de crédito</div>
+                  <div class="bank-card-type">Visa Gold</div>
+                </div>
+                <span class="status-pill">Activa</span>
+              </div>
+              <div class="bank-card-number">**** **** **** 9001</div>
+              <div class="bank-card-footer">
+                <div>
+                  <div class="bank-card-name">CLIENTE BANCO CONECTA</div>
+                  <div class="bank-card-exp">Vence: 09/28</div>
+                </div>
+                <div class="bank-card-right">
+                  <span>Disponible</span>
+                  <strong>RD$ 15,800.00</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="bank-card bank-card-green">
+              <div class="bank-card-header">
+                <div>
+                  <div class="bank-card-mini">Tarjeta débito</div>
+                  <div class="bank-card-type">Mastercard</div>
+                </div>
+                <span class="status-pill status-pill-yellow">Límite diario</span>
+              </div>
+              <div class="bank-card-number">**** **** **** 1234</div>
+              <div class="bank-card-footer">
+                <div>
+                  <div class="bank-card-name">CLIENTE BANCO CONECTA</div>
+                  <div class="bank-card-exp">Uso en RD y el extranjero</div>
+                </div>
+                <div class="bank-card-right">
+                  <span>Límite diario</span>
+                  <strong>RD$ 20,000.00</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PAGOS -->
+        <div class="card" id="pagos">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title">Pagos frecuentes</h3>
+              <p class="card-subtitle">Para que no se te pase ningún recibo.</p>
+            </div>
+          </div>
+          <div class="payment-list">
+            <div class="payment-item">
+              <div class="payment-main">
+                <div class="payment-name">Energía eléctrica</div>
+                <div class="payment-meta">
+                  Vence: 10 de cada mes • Estimado RD$ 2,350.00
+                </div>
+              </div>
+              <button class="btn-outline btn-small">Pagar ahora</button>
+            </div>
+
+            <div class="payment-item">
+              <div class="payment-main">
+                <div class="payment-name">Internet y cable</div>
+                <div class="payment-meta">Vence: 15 de cada mes • RD$ 1,800.00</div>
+              </div>
+              <button class="btn-outline btn-small">Pagar ahora</button>
+            </div>
+
+            <div class="payment-item">
+              <div class="payment-main">
+                <div class="payment-name">Plan móvil</div>
+                <div class="payment-meta">Recarga automática activa • RD$ 950.00</div>
+              </div>
+              <button class="btn-outline btn-small">Editar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- AYUDA -->
+        <div class="card" id="ayuda">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title">Estamos aquí para ayudarte</h3>
+              <p class="card-subtitle">Soporte siempre que lo necesites.</p>
+            </div>
+          </div>
+          <div class="support-grid">
+            <div class="support-box">
+              <div class="support-label">Línea de atención</div>
+              <div class="support-value">+1 (809) 000-0000</div>
+              <div class="support-label">24/7 para tarjetas y fraudes</div>
+            </div>
+            <div class="support-box">
+              <div class="support-label">WhatsApp</div>
+              <div class="support-value">+1 (809) 000-0001</div>
+              <div class="support-label">Consultas rápidas sin filas</div>
+            </div>
+            <div class="support-box">
+              <div class="support-label">Correo</div>
+              <div class="support-value">soporte@bancoconecta.com</div>
+              <div class="support-label">Respuestas en menos de 24 h</div>
+            </div>
+            <div class="support-box">
+              <div class="support-label">Sucursal virtual</div>
+              <div class="support-value">Videollamada</div>
+              <div class="support-label">Agenda tu cita en línea</div>
+            </div>
+          </div>
+          <p class="support-note">
+            🔐 Nunca compartas tu clave ni códigos por teléfono, correo o WhatsApp.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-inner">
+        <span>© 2025 Banco Conecta. Todos los derechos reservados. (Maqueta)</span>
+        <div class="footer-links">
+          <a href="#">Términos y condiciones</a>
+          <a href="#">Privacidad</a>
+          <a href="#">Seguridad</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
